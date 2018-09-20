@@ -1,5 +1,6 @@
 package cn.gaoyuexiang.todo.demo.service;
 
+import cn.gaoyuexiang.todo.demo.command.CreateTodoItemCommand;
 import cn.gaoyuexiang.todo.demo.model.TodoItem;
 import cn.gaoyuexiang.todo.demo.repository.TodoItemRepository;
 import org.junit.Test;
@@ -20,9 +21,10 @@ public class TodoItemServiceTest {
     public void should_create_todo_item() {
         //given
         String description = "This is a new todo item";
+        CreateTodoItemCommand command = new CreateTodoItemCommand(description);
 
         //when
-        TodoItem todoItem = service.createTodoItem(description);
+        TodoItem todoItem = service.createTodoItem(command);
 
         //then
         assertNotNull(todoItem.getId());

@@ -1,7 +1,9 @@
 package cn.gaoyuexiang.todo.demo.controller;
 
+import cn.gaoyuexiang.todo.demo.command.CreateTodoItemCommand;
 import cn.gaoyuexiang.todo.demo.model.TodoItem;
 import cn.gaoyuexiang.todo.demo.repository.TodoItemRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,14 +36,18 @@ public class ItemControllerTest {
 
     @Test
     public void should_create_todo_item() throws Exception {
+        ObjectMapper objectMapper = new ObjectMapper();
+        String description = "This is a new item";
+        CreateTodoItemCommand command = new CreateTodoItemCommand(description);
+        String commandJson = objectMapper.writeValueAsString(command);
         this.mockMvc.perform(
                 post("/api/todo-items")
                         .contentType(APPLICATION_JSON_UTF8)
-                        .content("{\"description\": \"This is a new item\"}"))
+                        .content(commandJson))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.id", isA(String.class)))
-                .andExpect(jsonPath("$.description", is("This is a new item")))
+                .andExpect(jsonPath("$.description", is(description)))
                 .andDo(print());
         verify(todoItemRepository).save(any(TodoItem.class));
     }

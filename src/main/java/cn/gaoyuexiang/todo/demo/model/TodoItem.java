@@ -4,9 +4,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "todo_item")
@@ -17,4 +16,10 @@ public class TodoItem {
     @Id
     private String id;
     private String description;
+    @ElementCollection
+    @CollectionTable(
+            name = "check_item",
+            joinColumns = @JoinColumn(name = "todo_item_id")
+    )
+    private List<CheckItem> checkList;
 }

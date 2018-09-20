@@ -13,6 +13,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.List;
+
+import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.isA;
 import static org.mockito.ArgumentMatchers.any;
@@ -38,7 +41,8 @@ public class ItemControllerTest {
     public void should_create_todo_item() throws Exception {
         ObjectMapper objectMapper = new ObjectMapper();
         String description = "This is a new item";
-        CreateTodoItemCommand command = new CreateTodoItemCommand(description);
+        List<String> checkList = asList("step1", "step2");
+        CreateTodoItemCommand command = new CreateTodoItemCommand(description, checkList);
         String commandJson = objectMapper.writeValueAsString(command);
         this.mockMvc.perform(
                 post("/api/todo-items")
@@ -48,6 +52,10 @@ public class ItemControllerTest {
                 .andExpect(content().contentType(APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.id", isA(String.class)))
                 .andExpect(jsonPath("$.description", is(description)))
+                .andExpect(jsonPath("$.checkList[0].status", is("UNCHECKED")))
+                .andExpect(jsonPath("$.checkList[0].description", is("step1")))
+                .andExpect(jsonPath("$.checkList[1].status", is("UNCHECKED")))
+                .andExpect(jsonPath("$.checkList[1].description", is("step2")))
                 .andDo(print());
         verify(todoItemRepository).save(any(TodoItem.class));
     }

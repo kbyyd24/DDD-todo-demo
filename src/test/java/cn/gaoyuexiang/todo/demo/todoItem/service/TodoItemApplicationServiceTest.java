@@ -1,5 +1,6 @@
 package cn.gaoyuexiang.todo.demo.todoItem.service;
 
+import cn.gaoyuexiang.todo.demo.todoItem.TodoItemApplicationService;
 import cn.gaoyuexiang.todo.demo.todoItem.command.CreateTodoItemCommand;
 import cn.gaoyuexiang.todo.demo.todoItem.model.CheckItem;
 import cn.gaoyuexiang.todo.demo.todoItem.model.TodoItem;
@@ -16,11 +17,12 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.verify;
 
-public class TodoItemServiceTest {
+public class TodoItemApplicationServiceTest {
 
+    private TodoItemFactory todoItemFactory = new TodoItemFactory();
     private TodoItemRepository repository = Mockito.mock(TodoItemRepository.class);
 
-    private TodoItemService service = new TodoItemService(repository);
+    private TodoItemApplicationService service = new TodoItemApplicationService(todoItemFactory, repository);
 
     @Test
     public void should_create_todo_item() {

@@ -30,4 +30,8 @@ public class TodoItem {
         this.description = description;
         this.checkList = checkList;
     }
+
+    public void updateDescription(String description) {
+        this.description = description;
+    }
 }

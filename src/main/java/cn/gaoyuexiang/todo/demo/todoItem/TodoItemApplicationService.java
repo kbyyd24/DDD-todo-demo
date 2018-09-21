@@ -1,6 +1,7 @@
 package cn.gaoyuexiang.todo.demo.todoItem;
 
 import cn.gaoyuexiang.todo.demo.todoItem.command.CreateTodoItemCommand;
+import cn.gaoyuexiang.todo.demo.todoItem.command.UpdateTodoItemDescriptionCommand;
 import cn.gaoyuexiang.todo.demo.todoItem.exception.NotFoundException;
 import cn.gaoyuexiang.todo.demo.todoItem.model.TodoItem;
 import cn.gaoyuexiang.todo.demo.todoItem.repository.TodoItemRepository;
@@ -31,5 +32,13 @@ public class TodoItemApplicationService {
     @Transactional
     public TodoItem getTodoItem(String id) {
         return todoItemRepository.findById(id).orElseThrow(() -> new NotFoundException("Cannot find TodoItem by " + id));
+    }
+
+    @Transactional
+    public TodoItem updateDescription(String id, UpdateTodoItemDescriptionCommand command) {
+        TodoItem todoItem = todoItemRepository.findById(id).orElseThrow(() -> new NotFoundException("Cannot find TodoItem by " + id));
+        todoItem.updateDescription(command.getDescription());
+        // automatically save todoItem when transaction committed by JPA
+        return todoItem;
     }
 }

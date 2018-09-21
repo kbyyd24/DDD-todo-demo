@@ -1,9 +1,9 @@
-package cn.gaoyuexiang.todo.demo.service;
+package cn.gaoyuexiang.todo.demo.todoItem.service;
 
-import cn.gaoyuexiang.todo.demo.command.CreateTodoItemCommand;
-import cn.gaoyuexiang.todo.demo.model.CheckItem;
-import cn.gaoyuexiang.todo.demo.model.TodoItem;
-import cn.gaoyuexiang.todo.demo.repository.TodoItemRepository;
+import cn.gaoyuexiang.todo.demo.todoItem.command.CreateTodoItemCommand;
+import cn.gaoyuexiang.todo.demo.todoItem.model.CheckItem;
+import cn.gaoyuexiang.todo.demo.todoItem.model.TodoItem;
+import cn.gaoyuexiang.todo.demo.todoItem.repository.TodoItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

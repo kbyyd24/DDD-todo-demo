@@ -1,8 +1,8 @@
-package cn.gaoyuexiang.todo.demo.controller;
+package cn.gaoyuexiang.todo.demo.todoItem.controller;
 
-import cn.gaoyuexiang.todo.demo.command.CreateTodoItemCommand;
-import cn.gaoyuexiang.todo.demo.model.TodoItem;
-import cn.gaoyuexiang.todo.demo.service.TodoItemService;
+import cn.gaoyuexiang.todo.demo.todoItem.command.CreateTodoItemCommand;
+import cn.gaoyuexiang.todo.demo.todoItem.model.TodoItem;
+import cn.gaoyuexiang.todo.demo.todoItem.service.TodoItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

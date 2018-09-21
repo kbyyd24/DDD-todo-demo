@@ -1,8 +1,8 @@
-package cn.gaoyuexiang.todo.demo.controller;
+package cn.gaoyuexiang.todo.demo.todoItem.controller;
 
-import cn.gaoyuexiang.todo.demo.command.CreateTodoItemCommand;
-import cn.gaoyuexiang.todo.demo.model.TodoItem;
-import cn.gaoyuexiang.todo.demo.repository.TodoItemRepository;
+import cn.gaoyuexiang.todo.demo.todoItem.command.CreateTodoItemCommand;
+import cn.gaoyuexiang.todo.demo.todoItem.model.TodoItem;
+import cn.gaoyuexiang.todo.demo.todoItem.repository.TodoItemRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,4 +1,4 @@
-package cn.gaoyuexiang.todo.demo.model;
+package cn.gaoyuexiang.todo.demo.todoItem.model;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

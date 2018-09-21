@@ -12,6 +12,7 @@ import javax.persistence.Embeddable;
 @Getter
 public class CheckItem {
 
+    private String id;
     private String description;
     private Status status;
 

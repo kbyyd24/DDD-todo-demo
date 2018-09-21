@@ -19,6 +19,7 @@ public class TodoItemFactory {
         List<CheckItem> checkItemList = checkList.stream()
                 .map(checkDescription -> {
                     CheckItem checkItem = new CheckItem();
+                    checkItem.setId(UUID.randomUUID().toString());
                     checkItem.setDescription(checkDescription);
                     checkItem.setStatus(CheckItem.Status.UNCHECKED);
                     return checkItem;

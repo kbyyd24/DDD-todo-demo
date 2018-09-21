@@ -5,7 +5,6 @@ import cn.gaoyuexiang.todo.demo.todoItem.model.TodoItem;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 import static java.util.stream.Collectors.toList;
 
@@ -14,13 +13,7 @@ public class TodoItemFactory {
 
     public TodoItem create(String description, List<String> checkList) {
         List<CheckItem> checkItemList = checkList.stream()
-                .map(checkDescription -> {
-                    CheckItem checkItem = new CheckItem();
-                    checkItem.setId(UUID.randomUUID().toString());
-                    checkItem.setDescription(checkDescription);
-                    checkItem.setStatus(CheckItem.Status.UNCHECKED);
-                    return checkItem;
-                })
+                .map(CheckItem::new)
                 .collect(toList());
         return new TodoItem(description, checkItemList);
     }

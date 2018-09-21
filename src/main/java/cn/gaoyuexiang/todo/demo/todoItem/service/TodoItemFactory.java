@@ -13,9 +13,6 @@ import static java.util.stream.Collectors.toList;
 public class TodoItemFactory {
 
     public TodoItem create(String description, List<String> checkList) {
-        TodoItem todoItem = new TodoItem();
-        todoItem.setId(UUID.randomUUID().toString());
-        todoItem.setDescription(description);
         List<CheckItem> checkItemList = checkList.stream()
                 .map(checkDescription -> {
                     CheckItem checkItem = new CheckItem();
@@ -25,7 +22,6 @@ public class TodoItemFactory {
                     return checkItem;
                 })
                 .collect(toList());
-        todoItem.setCheckList(checkItemList);
-        return todoItem;
+        return new TodoItem(description, checkItemList);
     }
 }

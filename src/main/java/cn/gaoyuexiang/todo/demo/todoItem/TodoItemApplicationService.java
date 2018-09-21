@@ -1,6 +1,7 @@
 package cn.gaoyuexiang.todo.demo.todoItem;
 
 import cn.gaoyuexiang.todo.demo.todoItem.command.CreateTodoItemCommand;
+import cn.gaoyuexiang.todo.demo.todoItem.exception.NotFoundException;
 import cn.gaoyuexiang.todo.demo.todoItem.model.TodoItem;
 import cn.gaoyuexiang.todo.demo.todoItem.repository.TodoItemRepository;
 import cn.gaoyuexiang.todo.demo.todoItem.service.TodoItemFactory;
@@ -25,5 +26,10 @@ public class TodoItemApplicationService {
         TodoItem todoItem = todoItemFactory.create(command.getDescription(), command.getCheckList());
         todoItemRepository.save(todoItem);
         return todoItem;
+    }
+
+    @Transactional
+    public TodoItem getTodoItem(String id) {
+        return todoItemRepository.findById(id).orElseThrow(() -> new NotFoundException("Cannot find TodoItem by " + id));
     }
 }

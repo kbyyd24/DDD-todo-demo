@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.List;
 
@@ -22,6 +23,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -33,18 +35,15 @@ public class ItemControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @MockBean
-    private TodoItemRepository todoItemRepository;
+    private ObjectMapper objectMapper = new ObjectMapper();
 
     @Test
     public void should_create_todo_item() throws Exception {
-        ObjectMapper objectMapper = new ObjectMapper();
         String description = "This is a new item";
         List<String> checkList = asList("step1", "step2");
         CreateTodoItemCommand command = new CreateTodoItemCommand(description, checkList);
         String commandJson = objectMapper.writeValueAsString(command);
-        this.mockMvc.perform(
+        MvcResult mvcResult = this.mockMvc.perform(
                 post("/api/todo-items")
                         .contentType(APPLICATION_JSON_UTF8)
                         .content(commandJson))
@@ -56,7 +55,11 @@ public class ItemControllerTest {
                 .andExpect(jsonPath("$.checkList[0].description", is("step1")))
                 .andExpect(jsonPath("$.checkList[1].status", is("UNCHECKED")))
                 .andExpect(jsonPath("$.checkList[1].description", is("step2")))
-                .andDo(print());
-        verify(todoItemRepository).save(any(TodoItem.class));
+                .andDo(print())
+                .andReturn();
+        TodoItem todoItem = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), TodoItem.class);
+
+        this.mockMvc.perform(get("/api/todo-items/{id}", todoItem.getId()))
+                .andExpect(status().isOk());
     }
 }
